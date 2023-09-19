@@ -41,8 +41,9 @@ class _ScientistLoginState extends State<ScientistLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Form(
+    return Scaffold(
+      
+      body: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
 import 'package:farmer_solution/farmer/farmer_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,7 @@ class FarmerLogin extends StatefulWidget {
 class _FarmerLoginState extends State<FarmerLogin> {
   String emailid = '';
   String useruid = '';
+  List usersall = [];
   voidCallbackAction() {}
   Future signInWithGoogle() async {
     showDialog(
@@ -30,6 +32,7 @@ class _FarmerLoginState extends State<FarmerLogin> {
     if (guser != null) {
       emailid = guser.email;
       useruid = guser.id;
+      
       final GoogleSignInAuthentication gauth = await guser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: gauth.accessToken,
@@ -38,7 +41,6 @@ class _FarmerLoginState extends State<FarmerLogin> {
       return FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((value) {
-      
         Navigator.of(context).popUntil((route) => route.isFirst);
 
         Navigator.pushReplacement(
@@ -46,7 +48,6 @@ class _FarmerLoginState extends State<FarmerLogin> {
             MaterialPageRoute(
                 builder: (_) => FarmerData(
                       email: emailid,
-                      
                     )));
       }).catchError((e) {
         showDialog(
@@ -62,9 +63,23 @@ class _FarmerLoginState extends State<FarmerLogin> {
     Navigator.of(context).pop();
   }
 
+  Future<void> alluser() async {
+    DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('Users').doc().get();
+
+    usersall.add(snapshot);
+  }
+
+  @override
+  void initState() {
+    alluser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: appbar,
       body: Column(
         children: [
           const SizedBox(
@@ -72,29 +87,44 @@ class _FarmerLoginState extends State<FarmerLogin> {
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-                onPressed: () {
+            child: GestureDetector(
+                onTap: () {
+                  
                   signInWithGoogle();
+               
                 },
                 child: SizedBox(
-                  height: 40,
-                  width: 450,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Image.asset('assets/icons/google_icon.png'),
+                    height: 40,
+                    width: 450,
+                    child: Container(
+                      height: 40,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          border: const Border(
+                              bottom: BorderSide(),
+                              top: BorderSide(),
+                              left: BorderSide(),
+                              right: BorderSide()),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Image.asset('assets/icons/google_icon.png'),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            'google'.tr,
+                            style: textsty,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      Text(
-                        'google'.tr,
-                        style: textsty,
-                      )
-                    ],
-                  ),
-                )),
+                    ))),
           )
         ],
       ),

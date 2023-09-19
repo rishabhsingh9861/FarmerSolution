@@ -1,4 +1,3 @@
-
 // ignore_for_file: file_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -33,14 +32,13 @@ class _ListOfProblemState extends State<ListOfProblem> {
               itemCount: snapshot.data!.docs.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-            
                 String probid = snapshot.data!.docs[index].id;
                 problemids.add(probid);
                 final problem =
                     snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
                 districtprob = '${problem['District']}';
-                cropprob = '  ${problem['Crop']}';
+                cropprob = '${problem['Crop']}';
 
                 return Padding(
                   padding: const EdgeInsets.all(20),
@@ -72,15 +70,18 @@ class _ListOfProblemState extends State<ListOfProblem> {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 districtprob,
-                                style: textsty,
+                                style: textst,
                               ),
                             ),
                             const SizedBox(
-                              width: 120,
+                              width: 100,
                             ),
-                            Text(
-                              cropprob,
-                              style: textsty,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                cropprob,
+                                style: textst,
+                              ),
                             ),
                           ],
                         ),

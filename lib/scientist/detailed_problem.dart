@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
+import 'package:farmer_solution/farmer/final_display.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +31,6 @@ class _DetailedProblemState extends State<DetailedProblem> {
   String videourl = '';
   String village = '';
   String solutionImage = '';
-  String p = '';
   final _formKey = GlobalKey<FormState>();
   final solutionController = TextEditingController();
 
@@ -145,74 +145,109 @@ class _DetailedProblemState extends State<DetailedProblem> {
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: SingleChildScrollView(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'Name: $name',
-                              style: textsty,
+                            Container(
+                              height: 350,
+                              width: 460,
+                              decoration: BoxDecoration(border: Border.all()),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'Name: $name',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'State: $state',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'District: $district',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'Taluka: $taluka',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'Village: $village',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'Pincode: $pincode',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                      'Crop: $crop',
+                                      style: textsty,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              'State: $state',
-                              style: textsty,
+                            SizedBox(
+                              height: 400,
+                              width: 400,
+                              child: Image.network(
+                                photourl,
+                              ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'District: $district',
-                              style: textsty,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Taluka: $taluka',
-                              style: textsty,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Village: $village',
-                              style: textsty,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Pincode: $pincode',
-                              style: textsty,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Crop: $crop',
-                              style: textsty,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            // SizedBox(
-                            //   height: 400,
-                            //   width: 400,
-                            //   child: Image.network(
-                            //     photourl,
-                            //   ),
-                            // ),
                             const SizedBox(
                               height: 20,
                             ),
-                            // SizedBox(
-                            //   height: 400,
-                            //   width: 400,
-                            //   child: Videoplayer(url: videourl.toString()),
-                            // ),
+                            SizedBox(
+                              height: 400,
+                              width: 400,
+                              child: Videoplayer(url: videourl.toString()),
+                            ),
                             const SizedBox(
                               height: 10,
                             ),
@@ -225,7 +260,7 @@ class _DetailedProblemState extends State<DetailedProblem> {
                                   child: TextFormField(
                                     decoration: InputDecoration(
                                         label: const Text(
-                                            'Write a Solution {In the given Problem Language}'),
+                                            'Solution {#Prefer problem language}'),
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(12),
@@ -244,7 +279,7 @@ class _DetailedProblemState extends State<DetailedProblem> {
                                 ),
                               ),
                             ),
-                            const Text('If Required add image'),
+                            const Text('#If required add image'),
                             ElevatedButton(
                                 onPressed: () async {
                                   ImagePicker imagePicker = ImagePicker();
@@ -291,7 +326,7 @@ class _DetailedProblemState extends State<DetailedProblem> {
                                   }
                                 },
                                 child: const Text(
-                                  'Add Image With Gallery',
+                                  'Add Image From Gallery',
                                   style: textsty,
                                 )),
                             const SizedBox(

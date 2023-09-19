@@ -3,6 +3,7 @@ import 'package:farmer_solution/login/select_login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 import '../constant.dart';
 
 class Language extends StatefulWidget {
@@ -13,17 +14,27 @@ class Language extends StatefulWidget {
 }
 
 class _LanguageState extends State<Language> {
+  final String url = "//msme.gov.in";
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(20.0),
             ),
-          const   Lang(),
+            const Lang(
+              tex: 'Select Language / भाषा चुने',
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -34,7 +45,27 @@ class _LanguageState extends State<Language> {
                 child: Text(
                   'next'.tr,
                   style: textsty,
-                ))
+                )),
+            const SizedBox(
+              height: 200,
+            ),
+            SizedBox(
+              height: 150,
+              width: 150,
+              child: Image.asset(
+                'assets/icons/MSME_Logo.jpg',
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              height: 200,
+              width: 250,
+              child: Image.asset(
+                'assets/icons/msme.jpg',
+              ),
+            ),
           ],
         ),
       ),

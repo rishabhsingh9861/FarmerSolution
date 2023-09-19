@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
 import 'package:farmer_solution/login/language.dart';
 import 'package:farmer_solution/scientist/listof_problem.dart';
+import 'package:farmer_solution/scientist/problemsolved.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ExpertHomePage extends StatefulWidget {
   const ExpertHomePage({super.key, this.expemail});
@@ -34,7 +36,6 @@ class _ExpertHomePageState extends State<ExpertHomePage> {
       Map<String, dynamic> userData = snapshot.data() as Map<String, dynamic>;
 
       states = userData['State'];
-      
     }
   }
 
@@ -55,32 +56,48 @@ class _ExpertHomePageState extends State<ExpertHomePage> {
           'कृषि समाधान',
           style: textsty,
         ),
-        actions: [
-          Center(
-            child: Padding(
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            Padding(
               padding: const EdgeInsets.all(15.0),
               child: GestureDetector(
                 onTap: () {
                   signUserOut();
                 },
-                child: const Text(
-                  'Signout',
-                  style: textsty,
+                child: Row(
+                  children: [
+                    SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Image.asset('assets/icons/signout.png')),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    const Text(
+                      'Sign Out',
+                      style: textsty,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 20,
+              height: 100,
             ),
-            ElevatedButton(
-                onPressed: () {
+            Center(
+              child: InkWell(
+                onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -89,28 +106,78 @@ class _ExpertHomePageState extends State<ExpertHomePage> {
                                 emails: widget.expemail.toString(),
                               )));
                 },
-                child: const Text(
-                  'Problem',
-                  style: textsty,
-                )),
+                child: Container(
+                  height: 60,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3, color: Colors.green),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'problem'.tr,
+                      style: textsty,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'History',
-                  style: textsty,
-                )),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ProblemSolved(
+                                emails: widget.expemail,
+                              )));
+                },
+                child: Container(
+                  height: 60,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3, color: Colors.green),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'solution'.tr,
+                      style: textsty,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
-            ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'Help',
-                  style: textsty,
-                )),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  ;
+                },
+                child: Container(
+                  height: 60,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3, color: Colors.green),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'help'.tr,
+                      style: textsty,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

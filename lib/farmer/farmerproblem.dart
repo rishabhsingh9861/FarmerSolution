@@ -17,35 +17,60 @@ class FarmerProblem extends StatefulWidget {
 }
 
 List<String> liststate = <String>[
-  'Select',
-  'Delhi',
-  'Rajasthan',
-  'Bihar',
-  'Maharashtra'
-];
-List<String> listcrop = <String>[
-  'Select',
-  'Wheat',
-  'Bajra',
-  'Sugarcanae',
-  'Banana'
+  'Select State'.tr,
+  'Andaman and Nicobar Islands'.tr,
+  'Andhra Pradesh'.tr,
+  'Arunachal Pradesh'.tr,
+  'Assam'.tr,
+  'Bihar'.tr,
+  'Chandigarh'.tr,
+  'Chhattisgarh'.tr,
+  'Dadra and Nagar Haveli and Daman and Diu'.tr,
+  'Delhi'.tr,
+  'Goa'.tr,
+  'Gujarat'.tr,
+  'Haryana'.tr,
+  'Himachal Pradesh'.tr,
+  'Jammu and Kashmir'.tr,
+  'Jharkhand'.tr,
+  'Karnataka'.tr,
+  'Kerala'.tr,
+  'Ladakh'.tr,
+  'Lakshadweep'.tr,
+  'Madhya Pradesh'.tr,
+  'Maharashtra'.tr,
+  'Manipur'.tr,
+  'Meghalaya'.tr,
+  'Mizoram'.tr,
+  'Nagaland'.tr,
+  'Odisha'.tr,
+  'Puducherry'.tr,
+  'Punjab'.tr,
+  'Rajasthan'.tr,
+  'Sikkim'.tr,
+  'Tamil Nadu'.tr,
+  'Telangana'.tr,
+  'Tripura'.tr,
+  'Uttar Pradesh'.tr,
+  'Uttarakhand'.tr,
+  'West Bengal'.tr,
 ];
 
 class _FarmerProblemState extends State<FarmerProblem> {
   final _formKey = GlobalKey<FormState>();
   final writeController = TextEditingController();
+  final cropnameController = TextEditingController();
   String videoUrl = '';
   String imageUrl =
       'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg';
 
   String dropdownValueState = liststate.first;
-  String dropdownValueCrop = listcrop.first;
+  // String dropdownValueCrop = listcrop.first;
   String stateData = '';
-  String cropData = '';
-  List<String> temp = List<String>.filled(2, "", growable: false);
+
+  // List<String> temp = List<String>.filled(2, "", growable: false);
 
   Widget dropdownMenu<T>(
-    
       List<T> list, T? dropdownValue, ValueChanged<T?> onChanged) {
     return DropdownButton<T>(
       value: dropdownValue,
@@ -73,371 +98,408 @@ class _FarmerProblemState extends State<FarmerProblem> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 15,
             ),
-            Center(
-              child: Container(
-                height: 200,
-                width: 250,
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadius.circular(55),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                'up'.tr,
+                style: textst,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                          source: ImageSource.gallery);
+                      if (file == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Image Not Selected',
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+
+                      String uniqueFilename =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference refrenceroot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                          refrenceroot.child('Images');
+
+                      Reference refrenceImageToUpload =
+                          referenceDirImages.child(uniqueFilename);
+
+                      try {
+                        await refrenceImageToUpload.putFile(File(file!.path));
+
+                        imageUrl = await refrenceImageToUpload.getDownloadURL();
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString(),
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 3, color: Colors.green),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              'assets/icons/photos-icon.png',
+                              color: Colors.black,
+                              height: 40,
+                              width: 40,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'og'.tr,
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickImage(
+                          source: ImageSource.camera);
+
+                      if (file == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Image Not Selected',
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+
+                      String uniqueFilename =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference refrenceroot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                          refrenceroot.child('Images');
+
+                      Reference refrenceImageToUpload =
+                          referenceDirImages.child(uniqueFilename);
+
+                      try {
+                        await refrenceImageToUpload.putFile(File(file!.path));
+
+                        imageUrl = await refrenceImageToUpload.getDownloadURL();
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString(),
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 3, color: Colors.green),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              'assets/icons/camera-icon-54.png',
+                              color: Colors.black,
+                              height: 40,
+                              width: 40,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'oc'.tr,
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                'uv'.tr,
+                style: textst,
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickVideo(
+                          source: ImageSource.gallery);
+
+                      if (file == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Image Not Selected',
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+
+                      String uniqueFilename =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference refrenceroot = FirebaseStorage.instance.ref();
+                      Reference referenceDirVideo =
+                          refrenceroot.child('Videos');
+
+                      Reference refrenceVideoToUpload =
+                          referenceDirVideo.child(uniqueFilename);
+
+                      try {
+                        await refrenceVideoToUpload.putFile(File(file!.path));
+
+                        videoUrl = await refrenceVideoToUpload.getDownloadURL();
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString(),
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 3, color: Colors.green),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              'assets/icons/photos-icon.png',
+                              color: Colors.black,
+                              height: 40,
+                              width: 40,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'og'.tr,
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: InkWell(
+                    onTap: () async {
+                      ImagePicker imagePicker = ImagePicker();
+                      XFile? file = await imagePicker.pickVideo(
+                          source: ImageSource.camera);
+
+                      if (file == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Image Not Selected',
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+
+                      String uniqueFilename =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      Reference refrenceroot = FirebaseStorage.instance.ref();
+                      Reference referenceDirVideo =
+                          refrenceroot.child('Videos');
+                      // Reference referenceDirImages =
+                      //     refrenceroot.child('Images');
+
+                      Reference refrenceVideoToUpload =
+                          referenceDirVideo.child(uniqueFilename);
+
+                      try {
+                        await refrenceVideoToUpload.putFile(File(file!.path));
+
+                        videoUrl = await refrenceVideoToUpload.getDownloadURL();
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              error.toString(),
+                              style: textsty,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 60,
+                      width: 180,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 3, color: Colors.green),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              'assets/icons/camera-icon-54.png',
+                              color: Colors.black,
+                              height: 40,
+                              width: 40,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'oc'.tr,
+                            style: const TextStyle(fontSize: 18),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child:
+                  dropdownMenu(liststate, dropdownValueState, (String? value) {
+                setState(() {
+                  dropdownValueState = value!;
+                  stateData =
+                      dropdownValueState; // Update the stateData variable.
+                });
+              }),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Form(
+                key: _formKey,
                 child: Column(
                   children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                          label: Text('cn'.tr),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide:
+                                  const BorderSide(color: Colors.green)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Colors.greenAccent),
+                              borderRadius: BorderRadius.circular(12))),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      minLines: 1,
+                      controller: cropnameController,
+                    ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
-                    Row(
-                      key: _formKey,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Image.asset(
-                            'assets/icons/photos-icon.png',
-                            color: Colors.black,
-                            height: 40,
-                            width: 40,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                            onTap: () async {
-                              ImagePicker imagePicker = ImagePicker();
-                              XFile? file = await imagePicker.pickImage(
-                                  source: ImageSource.gallery);
-                              if (file == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Image Not Selected',
-                                      style: textsty,
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              String uniqueFilename = DateTime.now()
-                                  .millisecondsSinceEpoch
-                                  .toString();
-
-                              Reference refrenceroot =
-                                  FirebaseStorage.instance.ref();
-                              Reference referenceDirImages =
-                                  refrenceroot.child('Images');
-
-                              Reference refrenceImageToUpload =
-                                  referenceDirImages.child(uniqueFilename);
-
-                              try {
-                                await refrenceImageToUpload
-                                    .putFile(File(file!.path));
-
-                                imageUrl = await refrenceImageToUpload
-                                    .getDownloadURL();
-                              } catch (error) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      error.toString(),
-                                      style: textsty,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('photo from gallery'))
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Image.asset(
-                            'assets/icons/camera-icon-54.png',
-                            color: Colors.black,
-                            height: 40,
-                            width: 40,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 25,
-                        ),
-                        InkWell(
-                            onTap: () async {
-                              ImagePicker imagePicker = ImagePicker();
-                              XFile? file = await imagePicker.pickImage(
-                                  source: ImageSource.camera);
-
-                              if (file == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Image Not Selected',
-                                      style: textsty,
-                                    ),
-                                  ),
-                                );
-                              }
-
-                              String uniqueFilename = DateTime.now()
-                                  .millisecondsSinceEpoch
-                                  .toString();
-
-                              Reference refrenceroot =
-                                  FirebaseStorage.instance.ref();
-                              Reference referenceDirImages =
-                                  refrenceroot.child('Images');
-
-                              Reference refrenceImageToUpload =
-                                  referenceDirImages.child(uniqueFilename);
-
-                              try {
-                                await refrenceImageToUpload
-                                    .putFile(File(file!.path));
-
-                                imageUrl = await refrenceImageToUpload
-                                    .getDownloadURL();
-                              } catch (error) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      error.toString(),
-                                      style: textsty,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('camera open'))
-                      ],
+                    SizedBox(
+                      height: 150,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            label: Text('wap'.tr),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide:
+                                    const BorderSide(color: Colors.green)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    const BorderSide(color: Colors.greenAccent),
+                                borderRadius: BorderRadius.circular(12))),
+                        controller: writeController,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-                height: 200,
-                width: 250,
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadius.circular(55),
-                ),
-                child: Center(
-                  child: Container(
-                      height: 200,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        color: Colors.lightGreen,
-                        borderRadius: BorderRadius.circular(55),
-                      ),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Image.asset(
-                                  'assets/icons/videogallery.png',
-                                  color: Colors.black,
-                                  height: 40,
-                                  width: 40,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  ImagePicker imagePicker = ImagePicker();
-                                  XFile? file = await imagePicker.pickVideo(
-                                      source: ImageSource.gallery);
-
-                                  if (file == null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'Image Not Selected',
-                                          style: textsty,
-                                        ),
-                                      ),
-                                    );
-                                  }
-
-                                  String uniqueFilename = DateTime.now()
-                                      .millisecondsSinceEpoch
-                                      .toString();
-
-                                  Reference refrenceroot =
-                                      FirebaseStorage.instance.ref();
-                                  Reference referenceDirVideo =
-                                      refrenceroot.child('Videos');
-                                
-
-                                  Reference refrenceVideoToUpload =
-                                      referenceDirVideo.child(uniqueFilename);
-
-                                  try {
-                                    await refrenceVideoToUpload
-                                        .putFile(File(file!.path));
-
-                                    videoUrl = await refrenceVideoToUpload
-                                        .getDownloadURL();
-                                  } catch (error) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          error.toString(),
-                                          style: textsty,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: const Text(
-                                  'Video from gallery',
-                                  style: textsty,
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Image.asset(
-                                  'assets/icons/camera-icon-54.png',
-                                  color: Colors.black,
-                                  height: 40,
-                                  width: 40,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 25,
-                              ),
-                              InkWell(
-                                  onTap: () async {
-                                    ImagePicker imagePicker = ImagePicker();
-                                    XFile? file = await imagePicker.pickVideo(
-                                        source: ImageSource.camera);
-
-                                    if (file == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Image Not Selected',
-                                            style: textsty,
-                                          ),
-                                        ),
-                                      );
-                                    }
-
-                                    String uniqueFilename = DateTime.now()
-                                        .millisecondsSinceEpoch
-                                        .toString();
-
-                                    Reference refrenceroot =
-                                        FirebaseStorage.instance.ref();
-                                    Reference referenceDirVideo =
-                                        refrenceroot.child('Videos');
-                                    // Reference referenceDirImages =
-                                    //     refrenceroot.child('Images');
-
-                                    Reference refrenceVideoToUpload =
-                                        referenceDirVideo.child(uniqueFilename);
-
-                                    try {
-                                      await refrenceVideoToUpload
-                                          .putFile(File(file!.path));
-
-                                      videoUrl = await refrenceVideoToUpload
-                                          .getDownloadURL();
-                                    } catch (error) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            error.toString(),
-                                            style: textsty,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: const Text('take vodeo'))
-                            ],
-                          ),
-                        ],
-                      )),
-                )),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: dropdownMenu(liststate, dropdownValueState,
-                      (String? value) {
-                    setState(() {
-                      dropdownValueState = value!;
-                      temp[0] = dropdownValueState.toString();
-                    });
-                  }),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                dropdownMenu(listcrop, dropdownValueCrop, (String? value) {
-                  setState(() {
-                    dropdownValueCrop = value!;
-                    temp[1] = dropdownValueCrop.toString();
-                  });
-                }),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Form(
-               
-                child: SizedBox(
-                  height: 150,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                        label: const Text('Write a problem'),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(color: Colors.green)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.greenAccent),
-                            borderRadius: BorderRadius.circular(12))),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    minLines: 1,
-                    controller: writeController,
-                  ),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (temp[0].isNotEmpty && temp[1].isNotEmpty) {
-                  stateData = temp[0];
-                  cropData = temp[1];
-
-                  if (imageUrl.isNotEmpty || videoUrl.isNotEmpty)  {
+            GestureDetector(
+              onTap: () {
+                if (stateData.isNotEmpty) {
+                  if (imageUrl.isNotEmpty || videoUrl.isNotEmpty) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -447,7 +509,7 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           videourl: videoUrl,
                           writefinal: writeController.text.trim(),
                           state: stateData,
-                          crop: cropData,
+                          crop: cropnameController.text.trim(),
                         ),
                       ),
                     );
@@ -472,11 +534,23 @@ class _FarmerProblemState extends State<FarmerProblem> {
                   );
                 }
               },
-              child: Text(
-                'next'.tr,
-                style: textsty,
+              child: Center(
+                child: Container(
+                  height: 60,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 3, color: Colors.green),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'next'.tr,
+                      style: textsty,
+                    ),
+                  ),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),

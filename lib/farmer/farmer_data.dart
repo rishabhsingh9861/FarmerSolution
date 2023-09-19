@@ -76,8 +76,8 @@ class _FarmerDataState extends State<FarmerData> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "name".tr,
-                      labelStyle: textsty,
+                      labelText: 'name'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -87,7 +87,7 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter name';
+                      return 'pen'.tr;
                     }
                     // if (validPincode( ) == false) {
                     //   return 'Please Provide valid pincode';
@@ -104,8 +104,8 @@ class _FarmerDataState extends State<FarmerData> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "state".tr,
-                      labelStyle: textsty,
+                      labelText: 'state'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -115,7 +115,7 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter state';
+                      return 'pes'.tr;
                     }
                     return null;
                   },
@@ -129,8 +129,8 @@ class _FarmerDataState extends State<FarmerData> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "district".tr,
-                      labelStyle: textsty,
+                      labelText: 'district'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -140,7 +140,7 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter district';
+                      return 'ped'.tr;
                     }
                     return null;
                   },
@@ -154,8 +154,8 @@ class _FarmerDataState extends State<FarmerData> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "taluka".tr,
-                      labelStyle: textsty,
+                      labelText: 'taluka'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -165,7 +165,7 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter taluka';
+                      return 'pet'.tr;
                     }
                     return null;
                   },
@@ -179,8 +179,8 @@ class _FarmerDataState extends State<FarmerData> {
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "village".tr,
-                      labelStyle: textsty,
+                      labelText: 'village'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -190,7 +190,7 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter  village';
+                      return 'pev'.tr;
                     }
                     return null;
                   },
@@ -205,8 +205,8 @@ class _FarmerDataState extends State<FarmerData> {
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                      labelText: "pincode".tr,
-                      labelStyle: textsty,
+                      labelText: 'pincode'.tr,
+                      labelStyle: textst,
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: const BorderSide(color: Colors.green)),
@@ -216,8 +216,9 @@ class _FarmerDataState extends State<FarmerData> {
                           borderRadius: BorderRadius.circular(12))),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter pincode';
+                      return 'pep'.tr;
                     }
+
                     // int? a = int.tryParse(value);
                     // if (validPincode(a!) == false) {
                     //   return 'Please enter correct pincode';
@@ -232,9 +233,7 @@ class _FarmerDataState extends State<FarmerData> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    
                     if (_formKey.currentState!.validate()) {
-                          
                       addUserDetails(
                               _nameController.text.trim(),
                               widget.email,

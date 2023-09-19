@@ -1,25 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
-import 'package:farmer_solution/farmer/detailedsoltuon.dart';
+import 'package:farmer_solution/scientist/solveddetailed.dart';
 import 'package:flutter/material.dart';
 
-class FarmerSolution extends StatefulWidget {
-  const FarmerSolution({super.key, this.emailid});
-  final String? emailid;
+class ProblemSolved extends StatefulWidget {
+  const ProblemSolved({super.key, this.emails});
+  final String? emails;
 
   @override
-  State<FarmerSolution> createState() => _FarmerSolutionState();
+  State<ProblemSolved> createState() => _ProblemSolvedState();
 }
 
-class _FarmerSolutionState extends State<FarmerSolution> {
-  List<String> solutiongiven = [];
+class _ProblemSolvedState extends State<ProblemSolved> {
+  List solveProblemids = [];
+  String districtsolve = '';
+  String cropsolve = '';
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
-          .collection('Users')
-          .doc(widget.emailid)
-          .collection('Solution')
+          .collection('ExpertUsers')
+          .doc(widget.emails)
+          .collection('SolvedProblem')
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -29,20 +31,26 @@ class _FarmerSolutionState extends State<FarmerSolution> {
               itemCount: snapshot.data!.docs.length,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                String solutionids = snapshot.data!.docs[index].id;
-                solutiongiven.add(solutionids);
+                String probid = snapshot.data!.docs[index].id;
+                solveProblemids.add(probid);
 
                 final problem =
                     snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
-              final  districtsolve = '${problem['District']}';
-               final cropsolve = '${problem['Crop']}';
+                districtsolve = '${problem['District']}';
+                cropsolve = '${problem['Crop']}';
 
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: InkWell(
                     onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (_) => SoluttionDetailed(email: widget.emailid, solnids: solutiongiven[index],)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailedSolvedProblem(
+                                    solvedids: solveProblemids[index],
+                                    email: widget.emails.toString(),
+                                  )));
                     },
                     child: Container(
                       height: 60,
@@ -90,5 +98,6 @@ class _FarmerSolutionState extends State<FarmerSolution> {
         }
       },
     );
+    ;
   }
 }

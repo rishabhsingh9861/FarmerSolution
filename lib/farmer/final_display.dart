@@ -184,24 +184,20 @@ class _FinalDisplayState extends State<FinalDisplay> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                children: [
-                  Center(
-                    child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: defaultimage(widget.imageUrl),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 25,
-                  ),
-                  Center(child: defaultvideo(widget.videourl.toString())),
-                ],
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: SizedBox(
+                height: 150,
+                width: 150,
+                child: defaultimage(widget.imageUrl),
               ),
             ),
+            const SizedBox(
+              height: 25,
+            ),
+            Center(child: defaultvideo(widget.videourl.toString())),
             const SizedBox(
               height: 15,
             ),
@@ -213,7 +209,7 @@ class _FinalDisplayState extends State<FinalDisplay> {
                     height: 50,
                     width: 150,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(15),
                         //color: Colors.green
                         border: const Border(
                             bottom: BorderSide(),
@@ -254,7 +250,7 @@ class _FinalDisplayState extends State<FinalDisplay> {
               height: 250,
               width: 250,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(15),
                   //color: Colors.green
                   border: const Border(
                       bottom: BorderSide(),
@@ -276,11 +272,15 @@ class _FinalDisplayState extends State<FinalDisplay> {
                       widget.crop.toString(), district.toString(), timestamp);
                 },
                 child: const Text(
-                  'All Correct',
+                  'Submit',
                   style: textsty,
                 )),
             const SizedBox(
-              height: 15,
+              height: 35,
+            ),
+            Text(
+              '(*Please press submit button before closing)',
+              style: TextStyle(fontSize: 15),
             ),
             ElevatedButton(
                 onPressed: () {
@@ -321,7 +321,7 @@ class _FinalDisplayState extends State<FinalDisplay> {
                           }));
                 },
                 child: const Text(
-                  'Submit',
+                  'close',
                   style: textsty,
                 ))
           ],
@@ -330,6 +330,9 @@ class _FinalDisplayState extends State<FinalDisplay> {
     );
   }
 }
+
+
+
 
 class Videoplayer extends StatefulWidget {
   const Videoplayer({super.key, this.url});
@@ -340,7 +343,6 @@ class Videoplayer extends StatefulWidget {
 }
 
 class _VideoplayerState extends State<Videoplayer> {
-  String asset = '';
   late VideoPlayerController controller;
 
   @override
@@ -349,7 +351,7 @@ class _VideoplayerState extends State<Videoplayer> {
     controller =
         VideoPlayerController.networkUrl(Uri.parse(widget.url.toString()))
           ..addListener(() => setState(() {}))
-          ..setLooping(true)
+          ..setLooping(false)
           ..initialize().then((value) => controller.play());
   }
 

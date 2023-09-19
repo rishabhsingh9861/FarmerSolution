@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Lang extends StatefulWidget {
-  const Lang({Key? key}) : super(key: key);
+  const Lang({Key? key, this.tex});
+  final String? tex;
 
   @override
   State<Lang> createState() => _LangState();
@@ -13,7 +14,7 @@ class _LangState extends State<Lang> {
   final List<Map<String, dynamic>> locale = [
     {'name': 'English', 'locale': const Locale('en', 'US')},
     {'name': 'हिंदी', 'locale': const Locale('hi', 'IN')},
-    {'name': 'मराठी', 'locale': const Locale('en', 'IN')},
+    {'name': 'मराठी', 'locale': const Locale('mr', 'IN')},
   ];
 
   builddailog(BuildContext context) {
@@ -53,15 +54,13 @@ class _LangState extends State<Lang> {
   }
 
   updateLanguage(Locale locale) {
-  Get.back();
-  Future.microtask(() {
-    if (mounted) {
-      Get.updateLocale(locale);
-    }
-  });
-}
-
-
+    Get.back();
+    Future.microtask(() {
+      if (mounted) {
+        Get.updateLocale(locale);
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -72,11 +71,16 @@ class _LangState extends State<Lang> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () {
-          builddailog(context);
-        },
-        child: const Text('Choose Language / भाषा चुनें' ,
-        style: textsty,));
+    return Center(
+      child: ElevatedButton(
+          onPressed: () {
+            builddailog(context);
+          },
+          child: Text(widget.tex.toString(),
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ))),
+    );
   }
 }

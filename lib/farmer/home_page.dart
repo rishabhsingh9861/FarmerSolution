@@ -39,22 +39,38 @@ class _HomepageFarmerState extends State<HomepageFarmer> {
           'कृषि समाधान',
           style: textsty,
         ),
-        actions: [
-          Center(
-            child: Padding(
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 100,
+            ),
+            Padding(
               padding: const EdgeInsets.all(15.0),
               child: GestureDetector(
                 onTap: () {
                   signUserOut();
                 },
-                child: Text(
-                  'signout'.tr,
-                  style: textsty,
+                child: Row(
+                  children: [
+                    SizedBox(
+                        height: 50,
+                        width: 50,
+                        child: Image.asset('assets/icons/signout.png')),
+                    const SizedBox(
+                      width: 25,
+                    ),
+                    const Text(
+                      'Sign Out',
+                      style: textsty,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -62,24 +78,23 @@ class _HomepageFarmerState extends State<HomepageFarmer> {
             const SizedBox(
               height: 150,
             ),
-            const Lang() ,
             Center(
               child: InkWell(
                 onTap: () {
-               
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (_) => FarmerProblem(idss: widget.emails)));
                 },
                 child: Container(
-                  height: 80,
-                  width: 150,
+                  height: 60,
+                  width: 250,
                   decoration: BoxDecoration(
-                    color: Colors.lightGreen,
-                    borderRadius: BorderRadius.circular(55),
+                    border: Border.all(width: 3, color: Colors.green),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
                       'myproblem'.tr,
                       style: textsty,
@@ -94,16 +109,19 @@ class _HomepageFarmerState extends State<HomepageFarmer> {
             InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const FarmerSolution()));
+                    MaterialPageRoute(builder: (_) =>  FarmerSolution(
+                      emailid: widget.emails,
+                    )));
               },
               child: Container(
-                height: 80,
-                width: 150,
+                height: 60,
+                width: 250,
                 decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadius.circular(55),
+                  border: Border.all(width: 3, color: Colors.green),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
                     'mysolution'.tr,
                     style: textsty,
@@ -120,19 +138,29 @@ class _HomepageFarmerState extends State<HomepageFarmer> {
                     MaterialPageRoute(builder: (_) => const HelpFarmer()));
               },
               child: Container(
-                height: 80,
-                width: 150,
+                height: 60,
+                width: 250,
                 decoration: BoxDecoration(
-                  color: Colors.lightGreen,
-                  borderRadius: BorderRadius.circular(55),
+                  border: Border.all(
+                    width: 3,
+                    color: Colors.green,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Text(
                     'help'.tr,
                     style: textsty,
                   ),
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 200,
+            ),
+            const Lang(
+              tex: 'Change Language / भाषा बदलें',
             ),
           ],
         ),

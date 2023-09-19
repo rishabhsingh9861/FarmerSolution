@@ -17,50 +17,79 @@ class _SelectLoginState extends State<SelectLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 200,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FarmerLogin()),
-                  );
-                },
-                child: Center(
-                  child: Text(
-                    'farmerlogin'.tr,
-                    style: textsty,
+      appBar: appbar,
+      body: Column(
+        children: [
+          const SizedBox(
+            height: 50,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 70,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FarmerLogin()),
+                    );
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'farmerlogin'.tr,
+                        style: textsty,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const ScientistLogin()));
-                },
-                child: Center(
-                  child: Text(
-                    'expertlogin'.tr,
-                    style: textsty,
+            ],
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 80,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ScientistLogin()),
+                    );
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'expertlogin'.tr,
+                        style: textsty,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
