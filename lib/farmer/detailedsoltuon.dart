@@ -60,7 +60,7 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
               child: Text('Error: ${snapshot.error}'),
             );
           } else if (!snapshot.hasData || !snapshot.data!.exists) {
-            return Center(
+            return const Center(
               child: Text('Document does not exist.'),
             );
           } else {

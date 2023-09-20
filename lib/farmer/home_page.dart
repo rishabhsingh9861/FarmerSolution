@@ -43,7 +43,7 @@ class _HomepageFarmerState extends State<HomepageFarmer> {
       drawer: Drawer(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             Padding(

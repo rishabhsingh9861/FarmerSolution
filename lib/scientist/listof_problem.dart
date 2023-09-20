@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
 import 'package:farmer_solution/scientist/detailed_problem.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class ListOfProblem extends StatefulWidget {
   const ListOfProblem({super.key, this.state, this.emails});
@@ -45,7 +44,7 @@ class _ListOfProblemState extends State<ListOfProblem> {
                 Timestamp timestamp = problem['Time'];
                 DateTime dateTime = timestamp.toDate();
                 String formattedTime =
-                    '${dateTime.toLocal().toString().split('.').first}';
+                    dateTime.toLocal().toString().split('.').first;
 
                 return Padding(
                   padding: const EdgeInsets.all(20),

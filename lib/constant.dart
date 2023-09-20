@@ -9,7 +9,6 @@ const textst = TextStyle(
   color: Colors.black,
 );
 
-
 PreferredSizeWidget appbar = AppBar(
   shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(bottom: Radius.circular(50))),

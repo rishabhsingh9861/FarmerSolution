@@ -25,7 +25,7 @@ class _SelectLoginState extends State<SelectLogin> {
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 70,
               ),
               Padding(

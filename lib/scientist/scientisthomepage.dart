@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
-import 'package:farmer_solution/farmer/help.dart';
 import 'package:farmer_solution/login/language.dart';
 import 'package:farmer_solution/scientist/helpexpert.dart';
 import 'package:farmer_solution/scientist/listof_problem.dart';

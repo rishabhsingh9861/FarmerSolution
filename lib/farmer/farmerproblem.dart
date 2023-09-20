@@ -65,10 +65,8 @@ class _FarmerProblemState extends State<FarmerProblem> {
       'https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg';
 
   String dropdownValueState = liststate.first;
-  // String dropdownValueCrop = listcrop.first;
-  String stateData = '';
 
-  // List<String> temp = List<String>.filled(2, "", growable: false);
+  String stateData = '';
 
   Widget dropdownMenu<T>(
       List<T> list, T? dropdownValue, ValueChanged<T?> onChanged) {
@@ -145,8 +143,19 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           showDialog(
                               context: context,
                               builder: (_) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Please wait Uploading',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          decoration: TextDecoration.none),
+                                    ),
+                                    CircularProgressIndicator(),
+                                  ],
+                                );
                               });
                           await refrenceImageToUpload.putFile(File(file.path));
 
@@ -161,7 +170,15 @@ class _FarmerProblemState extends State<FarmerProblem> {
                                 );
                               });
                         }
+
                         Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Image uploaded sucessfully'),
+                              );
+                            });
                       }
                     },
                     child: Container(
@@ -228,8 +245,19 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           showDialog(
                               context: context,
                               builder: (_) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Please wait Uploading',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          decoration: TextDecoration.none),
+                                    ),
+                                    CircularProgressIndicator(),
+                                  ],
+                                );
                               });
 
                           await refrenceImageToUpload.putFile(File(file.path));
@@ -246,6 +274,13 @@ class _FarmerProblemState extends State<FarmerProblem> {
                               });
                         }
                         Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Image uploaded sucessfully'),
+                              );
+                            });
                       }
                     },
                     child: Container(
@@ -323,8 +358,19 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           showDialog(
                               context: context,
                               builder: (_) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Please wait Uploading',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          decoration: TextDecoration.none),
+                                    ),
+                                    CircularProgressIndicator(),
+                                  ],
+                                );
                               });
                           await refrenceVideoToUpload.putFile(File(file.path));
 
@@ -340,6 +386,13 @@ class _FarmerProblemState extends State<FarmerProblem> {
                               });
                         }
                         Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Video uploaded sucessfully'),
+                              );
+                            });
                       }
                     },
                     child: Container(
@@ -406,8 +459,19 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           showDialog(
                               context: context,
                               builder: (_) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Please wait Uploading',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          decoration: TextDecoration.none),
+                                    ),
+                                    CircularProgressIndicator(),
+                                  ],
+                                );
                               });
                           await refrenceVideoToUpload.putFile(File(file.path));
 
@@ -423,6 +487,13 @@ class _FarmerProblemState extends State<FarmerProblem> {
                               });
                         }
                         Navigator.of(context).pop();
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Image uploaded sucessfully'),
+                              );
+                            });
                       }
                     },
                     child: Container(
@@ -466,8 +537,7 @@ class _FarmerProblemState extends State<FarmerProblem> {
                   dropdownMenu(liststate, dropdownValueState, (String? value) {
                 setState(() {
                   dropdownValueState = value!;
-                  stateData =
-                      dropdownValueState; // Update the stateData variable.
+                  stateData = dropdownValueState;
                 });
               }),
             ),
@@ -521,7 +591,7 @@ class _FarmerProblemState extends State<FarmerProblem> {
             ),
             GestureDetector(
               onTap: () {
-                if (stateData.isNotEmpty ) {
+                if (stateData.isNotEmpty) {
                   if (imageUrl.isNotEmpty || videoUrl.isNotEmpty) {
                     Navigator.push(
                       context,
@@ -551,7 +621,8 @@ class _FarmerProblemState extends State<FarmerProblem> {
                     context: context,
                     builder: (context) {
                       return const AlertDialog(
-                        content: Text('Please select state and write crop name'),
+                        content:
+                            Text('Please select state and write crop name'),
                       );
                     },
                   );

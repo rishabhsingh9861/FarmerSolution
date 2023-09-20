@@ -1,9 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Lang extends StatefulWidget {
-  const Lang({Key? key, this.tex});
+  const Lang({
+    Key? key,
+    this.tex,
+  }) : super(key: key);
   final String? tex;
 
   @override

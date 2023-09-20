@@ -108,7 +108,7 @@ class _FarmerLoginState extends State<FarmerLogin> {
                           borderRadius: BorderRadius.circular(5)),
                       child: Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 30,
                           ),
                           Padding(

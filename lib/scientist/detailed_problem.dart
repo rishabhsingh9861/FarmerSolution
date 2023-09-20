@@ -181,7 +181,7 @@ class _DetailedProblemState extends State<DetailedProblem> {
             Timestamp timestamp = problem['Time'];
             DateTime dateTime = timestamp.toDate();
             String formattedTime =
-                '${dateTime.toLocal().toString().split('.').first}';
+                dateTime.toLocal().toString().split('.').first;
 
             return Scaffold(
                 appBar: appbar,
@@ -368,9 +368,22 @@ class _DetailedProblemState extends State<DetailedProblem> {
                                     showDialog(
                                         context: context,
                                         builder: (_) {
-                                          return const Center(
-                                              child:
-                                                  CircularProgressIndicator());
+                                          return const Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Please wait Uploading',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    decoration:
+                                                        TextDecoration.none),
+                                              ),
+                                              CircularProgressIndicator(),
+                                            ],
+                                          );
                                         });
                                     await refrenceImageToUpload
                                         .putFile(File(file.path));
@@ -387,6 +400,14 @@ class _DetailedProblemState extends State<DetailedProblem> {
                                         });
                                   }
                                   Navigator.of(context).pop();
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const AlertDialog(
+                                          content: Text(
+                                              'Image uploaded sucessfully'),
+                                        );
+                                      });
                                 }
                               },
                               child: Container(
