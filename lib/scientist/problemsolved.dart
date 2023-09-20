@@ -22,6 +22,7 @@ class _ProblemSolvedState extends State<ProblemSolved> {
           .collection('ExpertUsers')
           .doc(widget.emails)
           .collection('SolvedProblem')
+          .orderBy('Solved Time', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -39,6 +40,14 @@ class _ProblemSolvedState extends State<ProblemSolved> {
 
                 districtsolve = '${problem['District']}';
                 cropsolve = '${problem['Crop']}';
+                Timestamp timestamp = problem['date'];
+                DateTime dateTime = timestamp.toDate();
+                String formattedTime =
+                    dateTime.toLocal().toString().split('.').first;
+                Timestamp solntime = problem['Solved Time'];
+                DateTime solndateTime = solntime.toDate();
+                String formattedsoln =
+                    solndateTime.toLocal().toString().split('.').first;
 
                 return Padding(
                   padding: const EdgeInsets.all(20),
@@ -53,35 +62,48 @@ class _ProblemSolvedState extends State<ProblemSolved> {
                                   )));
                     },
                     child: Container(
-                      height: 60,
+                      height: 92,
                       width: 160,
                       decoration: BoxDecoration(
                           color: Colors.lightGreen,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    districtsolve,
+                                    style: textst,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 100,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    cropsolve,
+                                    style: textst,
+                                  ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(
-                              width: 15,
+                              height: 5,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                districtsolve,
-                                style: textst,
-                              ),
-                            ),
+                            Text(' Problem: $formattedTime'),
                             const SizedBox(
-                              width: 100,
+                              height: 5,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                cropsolve,
-                                style: textst,
-                              ),
-                            ),
+                            Text(' Solved: $formattedsoln')
                           ],
                         ),
                       ),
@@ -98,6 +120,5 @@ class _ProblemSolvedState extends State<ProblemSolved> {
         }
       },
     );
-    ;
   }
 }

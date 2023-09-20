@@ -13,6 +13,34 @@ class SoluttionDetailed extends StatefulWidget {
 }
 
 class _SoluttionDetailedState extends State<SoluttionDetailed> {
+  Widget defaultvideosoln(String vidurl) {
+    if (vidurl.isEmpty) {
+      return SizedBox(
+        height: 150,
+        width: 150,
+        child: Image.asset(
+          'assets/icons/default-video.png',
+          color: Colors.black,
+        ),
+      );
+    } else {
+      return Videoplayer(url: vidurl.toString());
+    }
+  }
+
+  Widget defaultimage(String? imgurl) {
+    if (imgurl == null) {
+      return Image.asset(
+        'assets/icons/default-icon.png',
+        color: Colors.black,
+      );
+    } else {
+      return Image.network(
+        imgurl,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
@@ -47,6 +75,15 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
             final photourl = problemData['Photo Url'] as String;
             final videourl = problemData['Video Url'] as String;
             final solu = problemData['Solution'] as String;
+            final solnimg = problemData['Solution Image'] as String;
+            Timestamp timestamp = problemData['date'];
+            DateTime dateTime = timestamp.toDate();
+            String formattedTime =
+                dateTime.toLocal().toString().split('.').first;
+            Timestamp solntime = problemData['Solved Time'];
+            DateTime solndateTime = solntime.toDate();
+            String formattedsoln =
+                solndateTime.toLocal().toString().split('.').first;
 
             return Scaffold(
                 appBar: appbar,
@@ -62,7 +99,7 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
                             height: 10,
                           ),
                           Container(
-                            height: 350,
+                            height: 400,
                             width: 460,
                             decoration: BoxDecoration(border: Border.all()),
                             child: Column(
@@ -138,6 +175,16 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
                                     style: textsty,
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Text(
+                                    'Date: $formattedTime',
+                                    style: textsty,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -145,20 +192,16 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
                             height: 10,
                           ),
                           SizedBox(
-                            height: 400,
-                            width: 400,
-                            child: Image.network(
-                              photourl,
-                            ),
-                          ),
+                              height: 400,
+                              width: 400,
+                              child: defaultimage(photourl)),
                           const SizedBox(
                             height: 20,
                           ),
                           SizedBox(
-                            height: 400,
-                            width: 400,
-                            child: Videoplayer(url: videourl.toString()),
-                          ),
+                              height: 450,
+                              width: 400,
+                              child: defaultvideosoln(videourl)),
                           const SizedBox(
                             height: 10,
                           ),
@@ -170,9 +213,24 @@ class _SoluttionDetailedState extends State<SoluttionDetailed> {
                             height: 10,
                           ),
                           Text(
+                            'Date: $formattedsoln',
+                            style: textsty,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
                             ' $solu',
                             style: textsty,
-                          )
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            height: 400,
+                            width: 400,
+                            child: defaultimage(solnimg),
+                          ),
                         ],
                       ),
                     ),

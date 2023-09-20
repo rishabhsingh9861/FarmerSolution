@@ -20,6 +20,7 @@ class _FarmerSolutionState extends State<FarmerSolution> {
           .collection('Users')
           .doc(widget.emailid)
           .collection('Solution')
+          .orderBy('date', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -35,45 +36,64 @@ class _FarmerSolutionState extends State<FarmerSolution> {
                 final problem =
                     snapshot.data!.docs[index].data() as Map<String, dynamic>;
 
-              final  districtsolve = '${problem['District']}';
-               final cropsolve = '${problem['Crop']}';
+                final districtsolve = '${problem['District']}';
+                final cropsolve = '${problem['Crop']}';
+                Timestamp timestamp = problem['date'];
+                DateTime dateTime = timestamp.toDate();
+                String formattedTime =
+                    dateTime.toLocal().toString().split('.').first;
 
                 return Padding(
                   padding: const EdgeInsets.all(20),
                   child: InkWell(
                     onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (_) => SoluttionDetailed(email: widget.emailid, solnids: solutiongiven[index],)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => SoluttionDetailed(
+                                    email: widget.emailid,
+                                    solnids: solutiongiven[index],
+                                  )));
                     },
                     child: Container(
-                      height: 60,
+                      height: 80,
                       width: 160,
                       decoration: BoxDecoration(
                           color: Colors.lightGreen,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    districtsolve,
+                                    style: textst,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 100,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    cropsolve,
+                                    style: textst,
+                                  ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(
-                              width: 15,
+                              height: 5,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                districtsolve,
-                                style: textst,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 100,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                cropsolve,
-                                style: textst,
-                              ),
-                            ),
+                            Text('  $formattedTime')
                           ],
                         ),
                       ),

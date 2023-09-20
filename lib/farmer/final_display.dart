@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class FinalDisplay extends StatefulWidget {
@@ -65,50 +66,35 @@ class _FinalDisplayState extends State<FinalDisplay> {
   }
 
   Future<void> addProblemToExpert(
-    String crops,
-    String district,
-    Timestamp time,
-  ) async {
-    DocumentReference documentReference = await FirebaseFirestore.instance
-        .collection(widget.state.toString())
-        .add({
-      'Crop': crops,
-      'District': district,
-    });
-    probdocumentid = documentReference.id;
-  }
-
-  Future<void> addDetailedProblem(
       String photourl,
       String problem,
       String videourl,
       String states,
       String crops,
+      String district,
       String emailid,
       String name,
-      String district,
       String taluka,
       String village,
+      Timestamp time,
       int pincode) async {
-    if (probdocumentid.isNotEmpty) {
-      await FirebaseFirestore.instance
-          .collection(widget.state.toString())
-          .doc(probdocumentid)
-          .collection('DetailedProblem')
-          .add({
-        'Photo Url': photourl,
-        'Problem': problem,
-        'Video Url': videourl,
-        'State': states,
-        'Crop': crops,
-        'Email': emailid,
-        'Name': name,
-        'District': district,
-        'Taluka': taluka,
-        'Village': village,
-        'Pincode': pincode,
-      });
-    } else {}
+    DocumentReference documentReference = await FirebaseFirestore.instance
+        .collection(widget.state.toString())
+        .add({
+      'Photo Url': photourl,
+      'Problem': problem,
+      'Video Url': videourl,
+      'State': states,
+      'Crop': crops,
+      'District': district,
+      'Email': emailid,
+      'Name': name,
+      'Taluka': taluka,
+      'Village': village,
+      'Time': time,
+      'Pincode': pincode,
+    });
+    probdocumentid = documentReference.id;
   }
 
   Widget defaultimage(String? imgurl) {
@@ -120,7 +106,6 @@ class _FinalDisplayState extends State<FinalDisplay> {
     } else {
       return Image.network(
         imgurl,
-        // color: Colors.black,
       );
     }
   }
@@ -189,8 +174,8 @@ class _FinalDisplayState extends State<FinalDisplay> {
             ),
             Center(
               child: SizedBox(
-                height: 150,
-                width: 150,
+                height: 250,
+                width: 250,
                 child: defaultimage(widget.imageUrl),
               ),
             ),
@@ -201,86 +186,47 @@ class _FinalDisplayState extends State<FinalDisplay> {
             const SizedBox(
               height: 15,
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    height: 50,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        //color: Colors.green
-                        border: const Border(
-                            bottom: BorderSide(),
-                            top: BorderSide(),
-                            left: BorderSide(),
-                            right: BorderSide())),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(widget.state.toString()),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  height: 50,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      //color: Colors.green
-                      border: const Border(
-                          bottom: BorderSide(),
-                          top: BorderSide(),
-                          left: BorderSide(),
-                          right: BorderSide())),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(widget.crop.toString()),
-                  ),
-                )
-              ],
-            ),
             const SizedBox(
               height: 15,
             ),
             Container(
-              height: 250,
-              width: 250,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  //color: Colors.green
-                  border: const Border(
+              height: 350,
+              width: 350,
+              decoration: const BoxDecoration(
+                  border: Border(
                       bottom: BorderSide(),
                       top: BorderSide(),
                       left: BorderSide(),
                       right: BorderSide())),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: Text(widget.writefinal.toString()),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'State: ${widget.state}',
+                        style: textst,
+                      ),
+                      Text(
+                        'Crop: ${widget.crop}',
+                        style: textst,
+                      ),
+                      const Text(
+                        'Problem:',
+                        style: textst,
+                      ),
+                      Text(
+                        widget.writefinal.toString(),
+                        style: textst,
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
             const SizedBox(
-              height: 15,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  timestamp = Timestamp.now();
-                  addProblemToExpert(
-                      widget.crop.toString(), district.toString(), timestamp);
-                },
-                child: const Text(
-                  'Submit',
-                  style: textsty,
-                )),
-            const SizedBox(
-              height: 35,
-            ),
-            Text(
-              '(*Please press submit button before closing)',
-              style: TextStyle(fontSize: 15),
+              height: 20,
             ),
             ElevatedButton(
                 onPressed: () {
@@ -297,17 +243,18 @@ class _FinalDisplayState extends State<FinalDisplay> {
                       village.toString(),
                       int.parse(pincode.toString()));
 
-                  addDetailedProblem(
+                  addProblemToExpert(
                           widget.imageUrl.toString(),
                           widget.writefinal.toString(),
                           widget.videourl.toString(),
                           widget.state.toString(),
                           widget.crop.toString(),
+                          district.toString(),
                           widget.email.toString(),
                           name.toString(),
-                          district.toString(),
                           taluka.toString(),
                           village.toString(),
+                          timestamp,
                           int.parse(pincode.toString()))
                       .then((value) => showDialog(
                               context: context,
@@ -320,8 +267,8 @@ class _FinalDisplayState extends State<FinalDisplay> {
                             Navigator.of(context).popUntil((_) => count-- < 0);
                           }));
                 },
-                child: const Text(
-                  'close',
+                child: Text(
+                  'submit'.tr,
                   style: textsty,
                 ))
           ],
@@ -330,9 +277,6 @@ class _FinalDisplayState extends State<FinalDisplay> {
     );
   }
 }
-
-
-
 
 class Videoplayer extends StatefulWidget {
   const Videoplayer({super.key, this.url});
@@ -391,11 +335,11 @@ class VideoplayerWidget extends StatelessWidget {
   Widget build(BuildContext context) =>
       controller != null && controller!.value.isInitialized
           ? SizedBox(
-              height: 150,
+              height: 350,
               child: buildvideo(),
             )
           : const SizedBox(
-              height: 150,
+              height: 350,
               child: Center(
                 child: CircularProgressIndicator(),
               ));

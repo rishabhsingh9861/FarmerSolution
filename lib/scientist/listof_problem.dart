@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
 import 'package:farmer_solution/scientist/detailed_problem.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ListOfProblem extends StatefulWidget {
   const ListOfProblem({super.key, this.state, this.emails});
@@ -17,12 +18,14 @@ class ListOfProblem extends StatefulWidget {
 class _ListOfProblemState extends State<ListOfProblem> {
   String cropprob = '';
   String districtprob = '';
+
   List<String> problemids = [];
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection(widget.state.toString())
+          .orderBy('Time', descending: false)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -39,6 +42,10 @@ class _ListOfProblemState extends State<ListOfProblem> {
 
                 districtprob = '${problem['District']}';
                 cropprob = '${problem['Crop']}';
+                Timestamp timestamp = problem['Time'];
+                DateTime dateTime = timestamp.toDate();
+                String formattedTime =
+                    '${dateTime.toLocal().toString().split('.').first}';
 
                 return Padding(
                   padding: const EdgeInsets.all(20),
@@ -54,35 +61,41 @@ class _ListOfProblemState extends State<ListOfProblem> {
                                   )));
                     },
                     child: Container(
-                      height: 60,
+                      height: 70,
                       width: 160,
                       decoration: BoxDecoration(
                           color: Colors.lightGreen,
                           borderRadius: BorderRadius.circular(10)),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                              width: 15,
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    districtprob,
+                                    style: textst,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 100,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    cropprob,
+                                    style: textst,
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                districtprob,
-                                style: textst,
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 100,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                cropprob,
-                                style: textst,
-                              ),
-                            ),
+                            Text('  Problem date: $formattedTime')
                           ],
                         ),
                       ),

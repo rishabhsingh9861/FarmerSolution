@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:farmer_solution/constant.dart';
+import 'package:farmer_solution/farmer/help.dart';
 import 'package:farmer_solution/login/language.dart';
+import 'package:farmer_solution/scientist/helpexpert.dart';
 import 'package:farmer_solution/scientist/listof_problem.dart';
 import 'package:farmer_solution/scientist/problemsolved.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -159,7 +161,8 @@ class _ExpertHomePageState extends State<ExpertHomePage> {
             Center(
               child: InkWell(
                 onTap: () {
-                  ;
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => const HelpExpert()));
                 },
                 child: Container(
                   height: 60,

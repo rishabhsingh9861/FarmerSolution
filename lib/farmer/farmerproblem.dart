@@ -123,39 +123,45 @@ class _FarmerProblemState extends State<FarmerProblem> {
                       XFile? file = await imagePicker.pickImage(
                           source: ImageSource.gallery);
                       if (file == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Image Not Selected',
-                              style: textsty,
-                            ),
-                          ),
-                        );
-                      }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Image not selected'),
+                              );
+                            });
+                      } else {
+                        String uniqueFilename =
+                            DateTime.now().millisecondsSinceEpoch.toString();
 
-                      String uniqueFilename =
-                          DateTime.now().millisecondsSinceEpoch.toString();
+                        Reference refrenceroot = FirebaseStorage.instance.ref();
+                        Reference referenceDirImages =
+                            refrenceroot.child('Images');
 
-                      Reference refrenceroot = FirebaseStorage.instance.ref();
-                      Reference referenceDirImages =
-                          refrenceroot.child('Images');
+                        Reference refrenceImageToUpload =
+                            referenceDirImages.child(uniqueFilename);
 
-                      Reference refrenceImageToUpload =
-                          referenceDirImages.child(uniqueFilename);
+                        try {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              });
+                          await refrenceImageToUpload.putFile(File(file.path));
 
-                      try {
-                        await refrenceImageToUpload.putFile(File(file!.path));
-
-                        imageUrl = await refrenceImageToUpload.getDownloadURL();
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              error.toString(),
-                              style: textsty,
-                            ),
-                          ),
-                        );
+                          imageUrl =
+                              await refrenceImageToUpload.getDownloadURL();
+                        } catch (error) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('Image not uploaded'),
+                                );
+                              });
+                        }
+                        Navigator.of(context).pop();
                       }
                     },
                     child: Container(
@@ -200,39 +206,46 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           source: ImageSource.camera);
 
                       if (file == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Image Not Selected',
-                              style: textsty,
-                            ),
-                          ),
-                        );
-                      }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Image not selected'),
+                              );
+                            });
+                      } else {
+                        String uniqueFilename =
+                            DateTime.now().millisecondsSinceEpoch.toString();
 
-                      String uniqueFilename =
-                          DateTime.now().millisecondsSinceEpoch.toString();
+                        Reference refrenceroot = FirebaseStorage.instance.ref();
+                        Reference referenceDirImages =
+                            refrenceroot.child('Images');
 
-                      Reference refrenceroot = FirebaseStorage.instance.ref();
-                      Reference referenceDirImages =
-                          refrenceroot.child('Images');
+                        Reference refrenceImageToUpload =
+                            referenceDirImages.child(uniqueFilename);
 
-                      Reference refrenceImageToUpload =
-                          referenceDirImages.child(uniqueFilename);
+                        try {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              });
 
-                      try {
-                        await refrenceImageToUpload.putFile(File(file!.path));
+                          await refrenceImageToUpload.putFile(File(file.path));
 
-                        imageUrl = await refrenceImageToUpload.getDownloadURL();
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              error.toString(),
-                              style: textsty,
-                            ),
-                          ),
-                        );
+                          imageUrl =
+                              await refrenceImageToUpload.getDownloadURL();
+                        } catch (error) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('Image not Uploaded'),
+                                );
+                              });
+                        }
+                        Navigator.of(context).pop();
                       }
                     },
                     child: Container(
@@ -288,39 +301,45 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           source: ImageSource.gallery);
 
                       if (file == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Image Not Selected',
-                              style: textsty,
-                            ),
-                          ),
-                        );
-                      }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('video not Selected'),
+                              );
+                            });
+                      } else {
+                        String uniqueFilename =
+                            DateTime.now().millisecondsSinceEpoch.toString();
 
-                      String uniqueFilename =
-                          DateTime.now().millisecondsSinceEpoch.toString();
+                        Reference refrenceroot = FirebaseStorage.instance.ref();
+                        Reference referenceDirVideo =
+                            refrenceroot.child('Videos');
 
-                      Reference refrenceroot = FirebaseStorage.instance.ref();
-                      Reference referenceDirVideo =
-                          refrenceroot.child('Videos');
+                        Reference refrenceVideoToUpload =
+                            referenceDirVideo.child(uniqueFilename);
 
-                      Reference refrenceVideoToUpload =
-                          referenceDirVideo.child(uniqueFilename);
+                        try {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              });
+                          await refrenceVideoToUpload.putFile(File(file.path));
 
-                      try {
-                        await refrenceVideoToUpload.putFile(File(file!.path));
-
-                        videoUrl = await refrenceVideoToUpload.getDownloadURL();
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              error.toString(),
-                              style: textsty,
-                            ),
-                          ),
-                        );
+                          videoUrl =
+                              await refrenceVideoToUpload.getDownloadURL();
+                        } catch (error) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('video not uploaded'),
+                                );
+                              });
+                        }
+                        Navigator.of(context).pop();
                       }
                     },
                     child: Container(
@@ -365,41 +384,45 @@ class _FarmerProblemState extends State<FarmerProblem> {
                           source: ImageSource.camera);
 
                       if (file == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Image Not Selected',
-                              style: textsty,
-                            ),
-                          ),
-                        );
-                      }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AlertDialog(
+                                content: Text('Video not selected'),
+                              );
+                            });
+                      } else {
+                        String uniqueFilename =
+                            DateTime.now().millisecondsSinceEpoch.toString();
 
-                      String uniqueFilename =
-                          DateTime.now().millisecondsSinceEpoch.toString();
+                        Reference refrenceroot = FirebaseStorage.instance.ref();
+                        Reference referenceDirVideo =
+                            refrenceroot.child('Videos');
 
-                      Reference refrenceroot = FirebaseStorage.instance.ref();
-                      Reference referenceDirVideo =
-                          refrenceroot.child('Videos');
-                      // Reference referenceDirImages =
-                      //     refrenceroot.child('Images');
+                        Reference refrenceVideoToUpload =
+                            referenceDirVideo.child(uniqueFilename);
 
-                      Reference refrenceVideoToUpload =
-                          referenceDirVideo.child(uniqueFilename);
+                        try {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              });
+                          await refrenceVideoToUpload.putFile(File(file.path));
 
-                      try {
-                        await refrenceVideoToUpload.putFile(File(file!.path));
-
-                        videoUrl = await refrenceVideoToUpload.getDownloadURL();
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              error.toString(),
-                              style: textsty,
-                            ),
-                          ),
-                        );
+                          videoUrl =
+                              await refrenceVideoToUpload.getDownloadURL();
+                        } catch (error) {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text('Video not uploaded'),
+                                );
+                              });
+                        }
+                        Navigator.of(context).pop();
                       }
                     },
                     child: Container(
@@ -498,7 +521,7 @@ class _FarmerProblemState extends State<FarmerProblem> {
             ),
             GestureDetector(
               onTap: () {
-                if (stateData.isNotEmpty) {
+                if (stateData.isNotEmpty ) {
                   if (imageUrl.isNotEmpty || videoUrl.isNotEmpty) {
                     Navigator.push(
                       context,
@@ -528,7 +551,7 @@ class _FarmerProblemState extends State<FarmerProblem> {
                     context: context,
                     builder: (context) {
                       return const AlertDialog(
-                        content: Text('Please select both state and crop'),
+                        content: Text('Please select state and write crop name'),
                       );
                     },
                   );

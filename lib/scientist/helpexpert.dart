@@ -3,14 +3,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../constant.dart';
 
-class HelpFarmer extends StatefulWidget {
-  const HelpFarmer({super.key});
+class HelpExpert extends StatefulWidget {
+  const HelpExpert({super.key});
 
   @override
-  State<HelpFarmer> createState() => _HelpFarmerState();
+  State<HelpExpert> createState() => _HelpExpertState();
 }
 
-class _HelpFarmerState extends State<HelpFarmer> {
+class _HelpExpertState extends State<HelpExpert> {
   final Uri _url = Uri.parse('https://msme.gov.in');
   Future<void> _launchUrl() async {
     if (!await launchUrl(_url)) {
@@ -39,14 +39,14 @@ class _HelpFarmerState extends State<HelpFarmer> {
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Number: 1234567890',
+              'Number: 9876543210',
               style: textsty,
             ),
           ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              'Email: abc@gmail.com',
+              'Email: xyz@gmail.com',
               style: textsty,
             ),
           ),
